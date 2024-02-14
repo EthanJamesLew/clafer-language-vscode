@@ -1,0 +1,25 @@
+{
+  "name": "clafer-language",
+  "displayName": "clafer-language",
+  "description": "unofficial language support for the clafer modeling language",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.86.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "clafer",
+      "aliases": ["Clafer Modeling Language", "clafer"],
+      "extensions": ["cfr", "clf"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "clafer",
+      "scopeName": "source.cfr",
+      "path": "./syntaxes/clafer.tmLanguage.json"
+    }]
+  }
+}

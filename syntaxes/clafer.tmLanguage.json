@@ -1,0 +1,104 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Clafer Modeling Language",
+	"patterns": [
+		{
+			"include": "#goals"
+		},
+		{
+			"include": "#clafers"
+		},
+		{
+			"include": "#comment"
+		}
+	],
+	"repository": {
+		"goals": {
+			"patterns": [
+				{
+					"begin": "<<\\s*(minimize|maximize|min|max)",
+					"end": ">>",
+					"beginCaptures": {
+						"1": {"name": "keyword.control.goal.type.clafer"}
+					},
+					"patterns": [
+						{
+							"match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\b",
+							"name": "test"
+						}
+					]
+				}
+			]
+		},
+		"clafers": {
+			"patterns": [
+				{
+					"begin": "\\b(abstract\\s+|\\s*)([a-zA-Z_][a-zA-Z0-9_]*)",
+					"beginCaptures": {
+						"1": {"name": "storage.modifier.abstract.clafer"},
+						"2": {"name": "entity.name.type.clafer"}
+					},
+					"end": "^\\s*$",
+					"name": "meta.clafer",
+					"contentName": "meta.body.clafer",
+					"patterns": [
+						{
+						  "match": "\\b(initial|final|finalref|finaltarget)\\b",
+						  "name": "keyword.other.tempmodifier.clafer"
+						},
+						{
+						  "match": "\\b(xor|or)\\b",
+						  "name": "keyword.other.gcard.clafer"
+						},
+						{
+						  "include": "#super"
+						},
+						{
+						  "include": "#reference"
+						},
+						{
+						  "include": "#card"
+						},
+						{
+						  "include": "#init"
+						},
+						{
+						  "include": "#transition"
+						},
+						{
+						  "include": "#elements"
+						}
+					  ]
+					}
+				]
+		},
+		"keywords": {
+			"patterns": []
+		},
+		"comment": {
+			"patterns": [
+			  {
+				"match": "//.*$",
+				"name": "comment.line.double-slash.clafer"
+			  },
+			  {
+				"begin": "/\\*",
+				"end": "\\*/",
+				"name": "comment.block.clafer"
+			  }
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.clafer",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.clafer",
+					"match": "\\\\."
+				}
+			]
+		}
+	},
+	"scopeName": "source.cfr"
+}
