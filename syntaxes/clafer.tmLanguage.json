@@ -3,20 +3,47 @@
 	"name": "Clafer Modeling Language",
 	"patterns": [
 		{
+			"include": "#comment"
+		},
+		{
 			"include": "#goals"
 		},
 		{
-			"include": "#clafers"
+			"include": "#declarations"
 		},
 		{
-			"include": "#comment"
+			"include": "#clafers"
 		}
 	],
 	"repository": {
+		"declarations": {
+			"patterns": [
+				{
+					"begin": "\\b(enum)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*=",
+					"beginCaptures": {
+						"1": {"name": "storage.type.enum.clafer"},
+						"2": {"name": "entity.name.type.clafer"}
+					},
+					"end": "^\\s*$", 
+					"name": "meta.enum",
+					"contentName": "meta.body.enum",
+					"patterns": [
+						{
+							"name": "keyword.other",
+							"match": "\\|"
+						},
+						{
+							"name": "entity.name.enum.clafer",
+							"match": "([a-zA-Z_][a-zA-Z0-9_]*)"
+						}
+					]
+				}
+			]
+		},
 		"goals": {
 			"patterns": [
 				{
-					"begin": "<<\\s*(minimize|maximize|min|max)",
+					"begin": "\\b<<\\s*(minimize|maximize|min|max)\\b",
 					"end": ">>",
 					"beginCaptures": {
 						"1": {"name": "keyword.control.goal.type.clafer"}
@@ -42,6 +69,9 @@
 					"name": "meta.clafer",
 					"contentName": "meta.body.clafer",
 					"patterns": [
+						{
+							"include": "#comment"
+						},
 						{
 						  "match": "\\b(initial|final|finalref|finaltarget)\\b",
 						  "name": "keyword.other.tempmodifier.clafer"
@@ -98,7 +128,31 @@
 					"match": "\\\\."
 				}
 			]
-		}
+		},
+		"super": {
+			"patterns": [
+			  {
+				"match": ":\\s*[a-zA-Z_][a-zA-Z0-9_]*",
+				"name": "entity.other.inherited-class.clafer"
+			  }
+			]
+		  },
+		  "reference": {
+			"patterns": [
+			  {
+				"match": "->\\s*[a-zA-Z_][a-zA-Z0-9_]*",
+				"name": "variable.other.reference.clafer"
+			  }
+			]
+		  },
+		  "card": {
+			"patterns": [
+			  {
+				"match": "(\\?|\\+|\\*|[0-9]+)",
+				"name": "constant.numeric.cardinality.clafer"
+			  }
+			]
+		  }
 	},
 	"scopeName": "source.cfr"
 }
